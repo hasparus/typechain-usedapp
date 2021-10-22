@@ -2,18 +2,28 @@ import { ChainId, Config as UseDAppConfig, DAppProvider } from "@usedapp/core";
 import React from "react";
 import ReactDOM from "react-dom";
 
+import * as lowRuntime from "./low-runtime";
 import * as zeroRuntime from "./zero-runtime";
 
 function App() {
   const daiBalanceAndDecimals = zeroRuntime.useDaiBalanceAndDecimals();
+  const daiAllowance = lowRuntime.useDaiAllowance();
 
   const data = {
     daiBalanceAndDecimals,
+    daiAllowance,
   };
 
   console.log(data);
 
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
+  const isLoading = daiBalanceAndDecimals.decimals === undefined;
+
+  return (
+    <div>
+      <div>{isLoading && "Loading..."}</div>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
 }
 
 export const useDAppConfig: UseDAppConfig = {

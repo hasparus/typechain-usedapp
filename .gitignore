@@ -4,5 +4,6 @@ dist
 dist-ssr
 *.local
 .env
+cache
 
 NOTES.md

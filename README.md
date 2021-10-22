@@ -1,15 +1,14 @@
-# Possible stronger typing for Ethereum React Hooks.
+<h1>Possible stronger typing for Ethereum React Hooks.</h1>
 
-- [Possible stronger typing for Ethereum React Hooks.](#possible-stronger-typing-for-ethereum-react-hooks)
-  - [Problem](#problem)
-    - [`useContractCalls` examples](#usecontractcalls-examples)
-      - [**reading token allowance**](#reading-token-allowance)
-      - [**reading Uniswap pool immutables**](#reading-uniswap-pool-immutables)
-  - [Nonsolutions](#nonsolutions)
-  - [Possible Solutions](#possible-solutions)
-    - [1. _Zero Runtime_: Stronger types for existing useDApp hooks](#1-zero-runtime-stronger-types-for-existing-usedapp-hooks)
-    - [2. _Low Runtime_: Calls as dictionary](#2-low-runtime-calls-as-dictionary)
-  - [How to run this project?](#how-to-run-this-project)
+- [Problem](#problem)
+  - [`useContractCalls` examples](#usecontractcalls-examples)
+    - [**reading token allowance**](#reading-token-allowance)
+    - [**reading Uniswap pool immutables**](#reading-uniswap-pool-immutables)
+- [Nonsolutions](#nonsolutions)
+- [Possible Solutions](#possible-solutions)
+  - [1. _Zero Runtime_: Stronger types for existing useDApp hooks](#1-zero-runtime-stronger-types-for-existing-usedapp-hooks)
+  - [2. _Low Runtime_: Calls as dictionary](#2-low-runtime-calls-as-dictionary)
+- [How to run this project?](#how-to-run-this-project)
 
 ## Problem
 
@@ -114,7 +113,9 @@ const { data, isLoading, error, status } = useQuery(
 **[See example on TypeScript Playground](https://www.typescriptlang.org/play?jsx=4&ts=4.5.0-beta#code/JYWwDg9gTgLgBAbzgVwM4FMCKz1QJ5wC+cAZlBCHAORToCGAxjALQCOO+VAsAFC8nIAdk2ARBcAKIAPOuAA26AOrAYACwBK9Jtlx4AFAEpEvAJAB6M3EXo4DCMjkATFBji1GLdrrgB3Farh0NWZURwBrOBgIOC98OAAjOQgGMIZVOmBxTLg6SLwwdFQ6EhsfOjxTCzgAFVUbMHJE9EpgVAAaOHsoWzo5OVRfMSp4eJt4uhg09EcAOkrLTQ84HTjIPoGxUmS0DtRonxtHIfh0gDcbKLg5Vph0cRJoBKSUlDBHCcK5nhM7QVR4JDvGB0DqtAAyEDojkyAHMOrhyFBdsCYGgiHAALwuLAcfQAIjoyBEYmYDF6-TxHToqDwwjghkxAD5jN8fmJ-jkiTBROIsTCggBBLk8wymUxsv7wADatDKUEcHSiYTuHTkH3+ACFgI4ALqYnJlFRwAAK5BArXQM3Jeil4pMhOJghmsro8sMHTtDu5YhmSru7s9wp9atumu1otZOoMvHFtFRUHESBd8sVEGVglV6pgWuchFMhGjfG+ceQCbgQNyAH44AAeBroRkAKQAygB5AByM3+UFhwBI+grMxDhWz2o6ggccg6ACYDDWzPXmQAuOB4iFQ2EzLd43h5nhVZiHo-Hk+ns-nw8xnigSCwPIFFlwOBamHt5AgUZI3hPl9vj+4VpVDab9n2pdAAGExBgKAPGAngn0gwRoI8aoYL+DweTgp9W3OKAe0cQosLgcDyRwhFtUI3dSDNVcgjqKBUDxABuK8qgAcTuXAPmceICGqfIIPSTJeHQKRb3gAiGDVWhbDVVABiFR1AikW5BEcAYNTAxDkKYR9SCER1UBXBAQKfeJw1Mp8Em1AioBXbtYSIqy4FOXocBXX930-QCnKsiBcPwwpKxXMi8IogYADJEGoihgrgBzBBhOAAB8TTNC0awSmFmT3ZyDBXU0KAy7SYKYVC6HQx1GRYotnKkiAMD0Syn388iCNQOLQsCyLorIWL7Og2EUrSoqMEywbEpyyz8pG80xpKlC0KKKqassgjIFQFQ9FasL2riki+i68KZsKub0BrKVPP-KAdWqq9nOHMNHCa+DnM6ALwv20iPva6aCvSsbmrgKUso6K7PzB4BXy83A9SikzXre6zHFsgae0SmqkafVy5Hc58ob-T9Max7kQBHWQwA8gmYagYnnNyqy7tqqzk2enbuq+w6fsKE6AfOy7qeu27VsRyI039dnPpXA65CO9redG-msuFkDCBFsyLNF8yUdwNHHMsnG8fBgDUCAyzJb2kLuZ6pA+pAOKsuG06MqyqbXoVs6awWsqlowsQmZA+rGvN63OutuB4Zi+29cSp2+fG9HsqIECPeKqDSpgcrKu9QQA9e9aGq2i2gul762p5-7FZrY2oDzp9HtHZ6Q-LjrS65luU8rz3LJBia4Xx6HrshwfPzhvTnO11H4r7umrMN9AqZH3BZ6fUnyfARfCeXyyGbrtx0DlNnQ7b2XrdTsaa73v1BG24-iLL3aK9ml2+6ZvdeEk6SbF+Dl+RgRSc4rgZBiZkACeRMSAA)**
 
 Built-in polling would satisfy the need for refreshing new data after block
-changes, but we would lose request batching already implemented in useDApp.
+changes, but we would lose other features already implemented in useDapp. (e.g.
+We'd need to reach for []`ethcall`](https://github.com/Destiner/ethcall) for
+multicalls.)
 
 ## Possible Solutions
 
@@ -185,21 +186,33 @@ the hook API more concise.
 - We'd never call the same contract method twice in one `useContractCalls`
   invocation.
 
-Under these assumptions, the API could look like this:
+Under these assumptions, our hook can accept an object of `method -> args`.
 
 ```ts
-export function useDaiBalance() {
-  const { balanceOf, decimals } = useDaiCalls({
-    balanceOf: ["0x2e465ddca6d2c6c81ce6f260ab13148d43e93371"],
-    decimals: [],
-  });
+const { balanceOf, decimals } = useDaiCalls({
+  balanceOf: ["0x2e465ddca6d2c6c81ce6f260ab13148d43e93371"],
+  decimals: [],
+});
+```
 
-  return (
-    balanceOf?.[0] &&
-    decimals?.[0] &&
-    ethers.utils.formatUnits(balanceOf[0], decimals[0])
+We can easily implement this by mapping over entries, passing them to
+`useContractCalls` and collecting received results in a new object.
+
+```ts
+const useDaiCalls = (calls) => {
+  const methods = Object.keys(calls);
+
+  const results = useContractCalls(
+    methods.map((method) => ({
+      abi: daiInterface,
+      address: daiAddress,
+      method,
+      args: calls[method],
+    }))
   );
-}
+
+  return Object.fromEntries(results.map((result, i) => [methods[i], result]));
+};
 ```
 
 _See the code in [**./src/low-runtime.ts**](./src/low-runtime.ts) or on
@@ -209,6 +222,9 @@ _See the code in [**./src/low-runtime.ts**](./src/low-runtime.ts) or on
 
 ## How to run this project?
 
+Reading the types in VSCode should suffice, but to prove that the implementation
+works and fiddle with it, you can run the development server.
+
 1. Install dependencies
    ```sh
    pnpm install
@@ -216,4 +232,8 @@ _See the code in [**./src/low-runtime.ts**](./src/low-runtime.ts) or on
 2. Start Hardhat Node
    ```
    pnpm hardhat:node
+   ```
+3. Run development server
+   ```
+   pnpm dev
    ```
