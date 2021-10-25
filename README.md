@@ -9,6 +9,9 @@
   - [1. _Zero Runtime_: Stronger types for existing useDApp hooks](#1-zero-runtime-stronger-types-for-existing-usedapp-hooks)
   - [2. _Zero Codegen_: Ethers.js Contract instance as first argument](#2-zero-codegen-ethersjs-contract-instance-as-first-argument)
   - [3. Calls as dictionary](#3-calls-as-dictionary)
+  - [4. Lots of codegen](#4-lots-of-codegen)
+    - [**Usage**](#usage)
+    - [**Potential generated code**](#potential-generated-code)
 - [How to run this project?](#how-to-run-this-project)
 
 ## Problem
@@ -234,6 +237,33 @@ const useDaiCalls = (calls) => {
 
   return Object.fromEntries(results.map((result, i) => [methods[i], result]));
 };
+```
+
+### 4. Lots of codegen
+
+On TypeChain's side, we could generate a new hook for each possible call.
+
+#### **Usage**
+
+```ts
+import { useDaiBalanceOf } from './typechain-dist';
+
+const App() {
+  const balance = formatUnits(useDaiBalanceOf(address), 18);
+}
+```
+
+#### **Potential generated code**
+
+```ts
+function useDaiBalanceOf(...args: [string | Falsy]): BigNumber | undefined {
+  return useContractCall({
+    abi: DAI_ABI,
+    addresss: DAI_ADDRESS,
+    method: "balanceOf",
+    args: args.some(isFalsy) ? undefined : args,
+  })?.[0];
+}
 ```
 
 ---
