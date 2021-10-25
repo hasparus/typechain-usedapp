@@ -104,8 +104,6 @@ export function useDaiBalanceAndDecimals() {
     },
   ]);
 
-  console.log({ balance, decimals });
-
   return {
     balance:
       balance?.[0] &&

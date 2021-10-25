@@ -2,7 +2,7 @@ import { ChainId, Config as UseDAppConfig, DAppProvider } from "@usedapp/core";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import * as lowRuntime from "./low-runtime";
+import * as lowRuntime from "./calls-as-dict";
 import * as zeroRuntime from "./zero-runtime";
 
 function App() {
